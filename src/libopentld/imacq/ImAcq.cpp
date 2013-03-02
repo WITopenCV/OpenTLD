@@ -49,7 +49,7 @@ void imAcqInit(ImAcq *imAcq)
     }
     else if(imAcq->method == IMACQ_VID)
     {
-        imAcq->capture = cvCaptureFromAVI(imAcq->imgPath);
+      imAcq->capture = /*cvCreateFileCapture(imAcq->imgPath);*/ cvCaptureFromAVI(imAcq->imgPath);
 
         if(imAcq->capture == NULL)
         {
@@ -70,16 +70,16 @@ void imAcqInit(ImAcq *imAcq)
         }
 
         // something is wrong with startFrame and/or lastFrame
-        if((imAcq->lastFrame < 1) || (imAcq->currentFrame < 1) || ((imAcq->currentFrame > imAcq->lastFrame)))
+        /*if((imAcq->lastFrame < 1) || (imAcq->currentFrame < 1) || ((imAcq->currentFrame > imAcq->lastFrame)))
         {
             printf("Error: something is wrong with the start and last frame number. startFrame: %d lastFrame: %d\n",
                    imAcq->currentFrame, imAcq->lastFrame);
             exit(1);
-        }
+	}*/
 
         // set the video position to the correct frame
         //This produces strange results on some videos and is deactivated for now.
-        //imAcqVidSetNextFrameNumber(imAcq, imAcq->currentFrame);
+        imAcqVidSetNextFrameNumber(imAcq, imAcq->currentFrame);
     }
 
     imAcq->startFrame = imAcq->currentFrame;
